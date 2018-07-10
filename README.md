@@ -1,2 +1,3 @@
-# miwanoke
-Mind flow as notes keeping
+# Minota
+
+Make note taking great again
