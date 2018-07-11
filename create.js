@@ -1,4 +1,5 @@
-const uuid = require('uuid/v1');
+// const uuid = require('uuid/v1');
+const uuid = require('small-uuid').create;
 const moment = require('moment');
 const fs = require('fs-extra-promise');
 const yaml = require('js-yaml');
@@ -17,13 +18,13 @@ const note = {
 function createNoteFile (note) {
   const yamlConfig = yaml.safeDump(note.config);
   const fileContents = [
-    '---',
-    (yamlConfig.slice(-1) === '\n' ? yamlConfig.slice(0, -1) : yamlConfig),
-    '---',
+    //'---',
+    //(yamlConfig.slice(-1) === '\n' ? yamlConfig.slice(0, -1) : yamlConfig),
+    //'---',
     note.content
   ].join('\n');
 
-  fs.outputFileAsync(`./${defaultTitle}.md`, fileContents)
+  fs.outputFileAsync(`./${note.config.date}.${defaultTitle}.md`, fileContents)
     .then(function () {
       console.log(`Note '${defaultTitle}.md' created successfully`);
     })
