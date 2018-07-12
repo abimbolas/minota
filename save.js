@@ -2,6 +2,8 @@ const uuid = require('uuid/v1');
 // const moment = require('moment');
 const fs = require('fs-extra-promise');
 const yaml = require('js-yaml');
+const program = require('commander');
+const chalk = require('chalk');
 
 // We got directed to note, which need to be saved
 const notefile = 'my-note.md';
@@ -20,13 +22,7 @@ const storage = {
   }
 };
 
-fs.readFileAsync('./my-note.md', 'utf8')
-  .then(lines => {
-    console.log(lines);
-    const notes = parseNotes(lines);
-    const savedNote = putToStorage(notes[0]);
-    syncNote('./my-note.md', savedNote);
-  });
+
 
 function syncNote (path, savedNote) {
   const yamlConfig = yaml.safeDump(savedNote.config);
@@ -49,20 +45,25 @@ function syncNote (path, savedNote) {
 function parseNotes (notes) {
   return notes.split('...').filter(i => i).map(raw => {
     const parts = raw.split('---').filter(i => i);
-    console.log(parts);
-    return {
-      content: parts.slice(-1)[0].trim(),
-    }
+    const config = parts.slice(-2,-1)[0] && parts.slice(-2,-1)[0].trim();
+    const content = parts.slice(-1)[0] && parts.slice(-1)[0].trim();
+    const note = {
+      config: config ? yaml.safeLoad(config) : {},
+      content: content || ''
+    };
+    console.log(chalk.white.bgGreen('PARSE NOTES'), note);
+    return note;
   });
 }
 
 function putToStorage (note) {
   if (storage.type === 'file') {
-    const id = uuid();
+    console.log(chalk.bgYellow('Store'), note);
+    note.config.id = note.config.id || uuid();
 
-    fs.outputFileAsync(`${storage.file.path}/content/${id}.md`, [
+    fs.outputFileAsync(`${storage.file.path}/content/${note.config.id}.md`, [
       '---',
-      `id: ${note.id}`,
+      `id: ${note.config.id}`,
       '---',
       note.content.trim()
     ].join('\n'))
@@ -74,13 +75,32 @@ function putToStorage (note) {
       });
 
     // Last saved
-    fs.outputFileAsync(`${storage.file.path}/last-content`, `${id}.md`);
+    fs.outputFileAsync(`${storage.file.path}/last-content`, `${note.config.id}.md`);
 
-    return {
-      config: {
-        id: id
-      },
-      content: note.content
-    };
+    return note;
   }
 }
+
+// program
+//   .option('-f, --file [file]')
+//   .parse(process.argv);
+//
+// if (program.file) {
+// }
+
+function saveNote (params) {
+  if (params.file) {
+    const filename = `./${params.file}`;
+    fs.readFileAsync(filename, 'utf8')
+    .then(lines => {
+      const note = parseNotes(lines)[0];
+      // let id = params.file.split('.md')[0];
+      // note.id = note.id || id;
+      console.log(chalk.white.bgBlue('save'), JSON.stringify(note, null, '  '));
+      const savedNote = putToStorage(note);
+      syncNote(filename, savedNote);
+    });
+  }
+}
+
+module.exports = saveNote
