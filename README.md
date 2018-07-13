@@ -1,3 +1,3 @@
-# Minota
+# Minota&#x301;
 
-Make note taking great again
+Write out snapshots of your mind, be it task, todo, idea, article, or whatever can be written in Markdown format.
