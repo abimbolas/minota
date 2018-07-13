@@ -2,26 +2,13 @@
   "name": "minota",
   "version": "1.0.0",
   "description": "Make note taking great again",
-  "main": "create.js",
-  "directories": {
-    "example": "examples"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "main": "minota.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/abimbolas/minota.git"
   },
-  "keywords": [
-    "notes"
-  ],
   "author": "Vitaly Kuleshin <antivitla@gmail.com>",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/abimbolas/minota/issues"
-  },
-  "homepage": "https://github.com/abimbolas/minota#readme",
+  "license": "MIT",
   "dependencies": {
     "chalk": "^2.4.1",
     "commander": "^2.16.0",

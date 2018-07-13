@@ -1,8 +1,0 @@
----
-storage:
-  type: file
-  file:
-    path: d:/Dropbox/Notes/.minota
-
-topic: Поток сознания
-...
