@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Make note taking great again",
   "main": "minota.js",
+  "scripts": {
+    "test": "mocha --require babel-register **/*.test.js --watch",
+    "lint": "node_modules/.bin/eslint **/*.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/abimbolas/minota.git"
@@ -17,5 +21,18 @@
     "moment": "^2.22.2",
     "small-uuid": "^1.0.1",
     "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^13.0.0",
+    "eslint-plugin-import": "^2.13.0"
+  },
+  "babel": {
+    "presets": [
+      "env"
+    ]
   }
 }

@@ -1,4 +1,5 @@
 const cli = require('commander');
+const chalk = require('chalk');
 const create = require('./create');
 const save = require('./save');
 
@@ -15,7 +16,7 @@ cli
   .option('-f --file [file]')
   .action(({ file }) => {
     if (file && file !== true) {
-      save({ file: file });
+      save({ file });
     }
   });
 
