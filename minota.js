@@ -1,14 +1,16 @@
+/* eslint no-console: off */
 const cli = require('commander');
 const chalk = require('chalk');
-const createNote = require('./create');
-const save = require('./save');
+const save = require('./cli/save');
+const createNote = require('./cli/create');
+const init = require('./cli/init');
 
 // Create
 cli
   .command('create')
   .action(() => {
-    createNote().then((result) => {
-      console.log(chalk.green(`\nNote '${result.filename}' created.`));
+    createNote().then(() => {
+      console.log(chalk.green('Note created'));
     });
   });
 
@@ -20,6 +22,15 @@ cli
     if (file && file !== true) {
       save({ file });
     }
+  });
+
+// Init
+cli
+  .command('init')
+  .action(() => {
+    init().then(() => {
+      console.log(chalk.green('Minota initialized'));
+    });
   });
 
 // Parse command line arguments

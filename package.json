@@ -4,8 +4,8 @@
   "description": "Make note taking great again",
   "main": "minota.js",
   "scripts": {
-    "test": "mocha --require babel-register **/*.test.js --watch",
-    "lint": "node_modules/.bin/eslint **/*.js",
+    "test": "mocha **/*.test.js --watch",
+    "lint": "node_modules/.bin/eslint .",
     "minota": "node ./minota.js"
   },
   "repository": {
@@ -37,5 +37,13 @@
     "presets": [
       "env"
     ]
-  }
+  },
+  "eslintConfig": {
+    "extends": "airbnb-base",
+    "env": {
+      "node": true,
+      "browser": true
+    }
+  },
+  "eslintIgnore": ["*.test.js"]
 }

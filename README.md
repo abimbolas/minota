@@ -7,3 +7,7 @@ Write out snapshots of your mind, be it task, todo, idea, article, or whatever c
 Unit test:
 
 `$ npm test`
+
+Lint:
+
+`$ npm run lint`
