@@ -1,4 +1,5 @@
-import assert from 'assert';
+import { assert } from 'chai';
+import os from 'os';
 import parseNotes from './parse-notes';
 
 describe('Parse text into note object(s)', () => {
@@ -56,5 +57,57 @@ describe('Parse text into note object(s)', () => {
     assert.equal(notes.length, 2);
     assert.equal(notes[0].config.id, 6);
     assert.equal(notes[1].config.id, 100);
+  });
+
+  it('should parse notes without configs', () => {
+    const text = [
+      '---',
+      'Hello',
+      '...',
+      '---',
+      'Other hello',
+    ].join(os.EOL);
+    const notes = parseNotes(text);
+    assert.equal(notes.length, 2);
+    assert.equal(notes[0].content, 'Hello');
+    assert.equal(notes[1].content, 'Other hello');
+    assert.isNotOk(notes[0].config);
+    assert.isNotOk(notes[1].config);
+  });
+
+  it('should parse notes without configs and config markers', () => {
+    const text = [
+      '',
+      'Hello',
+      '',
+      '...',
+      '',
+      'Other hello',
+    ].join(os.EOL);
+    const notes = parseNotes(text);
+    assert.equal(notes.length, 2);
+    assert.equal(notes[0].content, 'Hello');
+    assert.equal(notes[1].content, 'Other hello');
+    assert.isNotOk(notes[0].config);
+    assert.isNotOk(notes[1].config);
+  });
+
+  it('should do not parse empty note', () => {
+    const text = [''].join(os.EOL);
+    const notes = parseNotes(text);
+    assert.equal(notes.length, 0);
+  });
+
+  it('should parse empty note if config present', () => {
+    const text = [
+      '---',
+      'id: 5',
+      '---',
+      '...',
+    ].join(os.EOL);
+    const notes = parseNotes(text);
+    assert.equal(notes.length, 1);
+    assert.equal(notes[0].content, '');
+    assert.equal(notes[0].config.id, 5);
   });
 });
