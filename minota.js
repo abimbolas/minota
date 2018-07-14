@@ -22,6 +22,9 @@ cli
     if (file && file !== true) {
       save({ file });
     }
+    if (!file) {
+      console.log(chalk.yellow('You should specify filename with \'--file\' option'));
+    }
   });
 
 // Init
