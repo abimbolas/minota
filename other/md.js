@@ -1,7 +1,9 @@
-import yaml from 'js-yaml';
+// import yaml from 'js-yaml';
+const yaml = require('js-yaml');
 
 // According to YAML spec, '---' divide parts of document (config, content),
 // and '...' divide whole documents (notes)
+
 function parseNotes(text) {
   return text.trim()
     .split(/^\.\.\.\s*$/gm)
@@ -20,4 +22,15 @@ function parseNotes(text) {
     });
 }
 
-export default parseNotes;
+function stringifyNotes(notes) {
+  return notes.map((note) => {
+    const config = note.config ? `---\n${yaml.safeDump(note.config)}---\n` : '';
+    const content = note.content || '';
+    return `${config}${content}`;
+  }).join('\n...\n');
+}
+
+module.exports = {
+  parse: parseNotes,
+  stringify: stringifyNotes,
+};

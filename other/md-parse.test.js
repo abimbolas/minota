@@ -1,6 +1,6 @@
-import { assert } from 'chai';
-import os from 'os';
-import parseNotes from './parse-notes';
+const { assert } = require('chai');
+const os = require('os');
+const parseNotes = require('./md').parse;
 
 describe('Parse text into note object(s)', () => {
   it('should treat just text as text', () => {

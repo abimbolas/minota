@@ -1,5 +1,5 @@
-import { assert } from 'chai';
-import stringifyNotes from './stringify-notes';
+const { assert } = require('chai');
+const stringifyNotes = require('./md').stringify;
 
 describe('Stringify notes into text', () => {
   it('should stringify just text if no config and one note', () => {

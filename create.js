@@ -1,39 +1,24 @@
-// const uuid = require('uuid/v1');
-const uuid = require('small-uuid').create;
 const moment = require('moment');
+const smallUUID = require('small-uuid');
 const fs = require('fs-extra-promise');
-const yaml = require('js-yaml');
+const stringifyNotes = require('./other/md').stringify;
 
-// Generate note title if not specified
-const defaultTitle = uuid();
-
-// Create file with default config and empty content
-function createDefaultNote () {
+function newNote() {
   return {
-    content: 'Enter your text here',
     config: {
-      date: moment().format()
-    }
-  }
+      date: moment().format(),
+    },
+    content: '(Enter your text here)',
+  };
 }
 
-function createNoteFile (params) {
-  const note = (params && params.note) || createDefaultNote();
-  // const yamlConfig = yaml.safeDump(note.config);
-  const fileContents = [
-    // '---',
-    // (yamlConfig.slice(-1) === '\n' ? yamlConfig.slice(0, -1) : yamlConfig),
-    // '---',
-    note.content
-  ].join('\n');
-
-  fs.outputFileAsync(`./${defaultTitle}.md`, fileContents)
-    .then(function () {
-      console.log(`Note '${defaultTitle}.md' created successfully`);
-    })
-    .catch(error => {
-      console.log(error);
-    });
+function createNote() {
+  const note = newNote();
+  const name = `note.${smallUUID.create()}`;
+  const filename = `./${name}.md`;
+  return fs
+    .outputFileAsync(filename, stringifyNotes([note]))
+    .then(() => Promise.resolve({ note, filename }));
 }
 
-module.exports = createNoteFile;
+module.exports = createNote;

@@ -1,13 +1,15 @@
 const cli = require('commander');
 const chalk = require('chalk');
-const create = require('./create');
+const createNote = require('./create');
 const save = require('./save');
 
 // Create
 cli
   .command('create')
   .action(() => {
-    create();
+    createNote().then((result) => {
+      console.log(chalk.green(`\nNote '${result.filename}' created.`));
+    });
   });
 
 // Save

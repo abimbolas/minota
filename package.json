@@ -5,7 +5,8 @@
   "main": "minota.js",
   "scripts": {
     "test": "mocha --require babel-register **/*.test.js --watch",
-    "lint": "node_modules/.bin/eslint **/*.js"
+    "lint": "node_modules/.bin/eslint **/*.js",
+    "minota": "node ./minota.js"
   },
   "repository": {
     "type": "git",
