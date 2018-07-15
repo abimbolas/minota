@@ -1,4 +1,3 @@
-/* eslint-env node, mocha */
 const { assert } = require('chai');
 const stringifyNotes = require('./md').stringify;
 

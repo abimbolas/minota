@@ -1,4 +1,3 @@
-/* eslint-env node, mocha */
 const { assert } = require('chai');
 const os = require('os');
 const parseNotes = require('./md').parse;
