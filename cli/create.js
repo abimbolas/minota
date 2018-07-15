@@ -1,24 +1,17 @@
 const moment = require('moment');
-const randomString = require('small-uuid');
+const uuid = require('uuid/v1');
 const fs = require('fs-extra-promise');
 const md = require('../other/md');
 
-function newNote() {
-  return {
+function createNote() {
+  const note = {
     config: {
+      id: uuid(),
       date: moment().format(),
     },
     content: '(Enter your text here)',
   };
-}
-
-function createNote() {
-  const note = newNote();
-  const name = `note.${randomString.create()}`;
-  const filename = `./${name}.md`;
-  return fs
-    .outputFileAsync(filename, md.stringify(note))
-    .then(() => ({ note, filename }));
+  return fs.outputFileAsync(`./note.${note.config.id}.md`, md.stringify(note));
 }
 
 module.exports = createNote;

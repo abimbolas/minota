@@ -1,10 +1,11 @@
 /* eslint no-console: off */
 const cli = require('commander');
 const chalk = require('chalk');
-const init = require('./cli/init');
-const createNote = require('./cli/create');
-const save = require('./cli/save');
-const load = require('./cli/load');
+const config = require('./config');
+const init = require('./init');
+const create = require('./create');
+const save = require('./save');
+const load = require('./load');
 
 // Init
 cli
@@ -19,7 +20,7 @@ cli
 cli
   .command('create')
   .action(() => {
-    createNote().then(() => {
+    create().then(() => {
       console.log(chalk.green('Note created'));
     });
   });
@@ -30,7 +31,9 @@ cli
   .option('-f --file [file]')
   .action(({ file }) => {
     if (file && file !== true) {
-      save({ file });
+      save({ file }, config.storage).then(() => {
+        console.log(chalk.green('Notes saved'));
+      });
     }
     if (!file) {
       console.log(chalk.yellow('You should specify filename with \'--file\' option'));
@@ -43,7 +46,7 @@ cli
   .option('-l --last [last]')
   .action(({ last }) => {
     if (last) {
-      load({ last }).then(() => {
+      load({ last }, config.storage).then(() => {
         console.log(chalk.green('Notes loaded'));
       });
     }
