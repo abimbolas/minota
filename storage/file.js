@@ -7,6 +7,7 @@ class FileStorage {
     if (!path) {
       throw new Error('FileStorage constructor: should be path to storage');
     }
+    this.type = 'file';
     this.path = path;
   }
 
