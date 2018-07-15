@@ -1,9 +1,19 @@
 /* eslint no-console: off */
 const cli = require('commander');
 const chalk = require('chalk');
-const save = require('./cli/save');
-const createNote = require('./cli/create');
 const init = require('./cli/init');
+const createNote = require('./cli/create');
+const save = require('./cli/save');
+const load = require('./cli/load');
+
+// Init
+cli
+  .command('init')
+  .action(() => {
+    init().then(() => {
+      console.log(chalk.green('Minota initialized'));
+    });
+  });
 
 // Create
 cli
@@ -27,13 +37,19 @@ cli
     }
   });
 
-// Init
+// Load
 cli
-  .command('init')
-  .action(() => {
-    init().then(() => {
-      console.log(chalk.green('Minota initialized'));
-    });
+  .command('load')
+  .option('-l --last [last]')
+  .action(({ last }) => {
+    if (last) {
+      load({ last }).then(() => {
+        console.log(chalk.green('Notes loaded'));
+      });
+    }
+    if (!last) {
+      console.log(chalk.yellow('You should specify load options'));
+    }
   });
 
 // Parse command line arguments

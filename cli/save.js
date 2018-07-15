@@ -2,7 +2,7 @@ const uuid = require('uuid/v1');
 const fs = require('fs-extra-promise');
 const md = require('../other/md');
 
-const db = {
+const storage = {
   post(rawNotes) {
     const config = JSON.parse(fs.readFileSync('./minota.json', 'utf8'));
     const notes = rawNotes.map((rawNote) => {
@@ -32,16 +32,19 @@ const db = {
   },
 };
 
-function saveNote(params) {
+function saveNotes(params) {
   if (params.file) {
+    // read notes
     fs.readFileAsync(`./${params.file}`, 'utf8')
+      // read and parse notes
       .then(contents => md.parse(contents))
-      .then(rawNotes => db.post(rawNotes))
+      // save to storage
+      .then(rawNotes => storage.post(rawNotes))
+      // update focused
       .then((notes) => {
-        // Overwrite with new id from db
         fs.outputFileAsync(`./${params.file}`, md.stringify(notes));
       });
   }
 }
 
-module.exports = saveNote;
+module.exports = saveNotes;

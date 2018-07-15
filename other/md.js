@@ -23,7 +23,7 @@ function parseNotes(text) {
 }
 
 function stringifyNotes(notes) {
-  return notes.map((note) => {
+  return (Array.isArray(notes) ? notes : [notes]).map((note) => {
     const config = note.config ? `---\n${yaml.safeDump(note.config)}---\n` : '';
     const content = note.content || '';
     return `${config}${content}`;
