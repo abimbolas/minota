@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Minota</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Merriweather:300,400|Montserrat:300,400,600&amp;subset=cyrillic">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div id="app">
+      <!-- Note -->
+      <div class="note note-content">
+        CLI Plugins are npm packages that provide optional features
+        to your Vue CLI projects, such as Babel/TypeScript transpilation,
+        ESLint integration, unit testing, and end-to-end testing.
+        It's easy to spot a Vue CLI plugin as their names start with
+        either @vue/cli-plugin- (for built-in plugins) or vue-cli-plugin-
+        (for community plugins).
+      </div>
+      <!-- API -->
+      <div class="api-debug">
+        <h4>GET/</h4>
+        <p class="form-control">
+          <input class="get-url" type="text">
+          <button class="submit-get-url">Ok</button>
+        </p>
+
+        <h4>POST/</h4>
+        <p>
+          <div>URL</div>
+          <input type="text">
+        </p>
+        <p>
+          <div>Body</div>
+          <textarea rows="4" cols="20"></textarea>
+        </p>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
